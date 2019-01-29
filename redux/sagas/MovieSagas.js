@@ -1,6 +1,6 @@
 import { put, takeLatest } from 'redux-saga/effects';
 import { Api } from './Api';
-import { FETCH_SUCEEDED, FETCH_FAILED, FETCH_MOVIES } from '../actions/ActionTypes';
+import { FETCH_SUCEEDED, FETCH_FAILED, FETCH_MOVIES, ADD_MOVIES, UPDATE_MOVIE, UPDATE_SUCEEDED } from '../actions/ActionTypes';
 
 function* fetchMovies(){
     try{
@@ -13,6 +13,38 @@ function* fetchMovies(){
         yield put ({ type: FETCH_FAILED, error});
     }
 }
+function* addNewMovie(action){
+    try{
+        const result= yield Api.insertNewMovieFromApi(action.newMovie);
+        if ( result == true){
+            yield put({
+                type: FETCH_MOVIES, sort: 'desc'
+            });
+        }
+    }
+    catch (error){
+
+    }
+}
+function updateMovie(action){
+    try{
+        const result = yield Api.updatedMovieFromApi(action.updateMovie);
+        if (result === true){
+            yield put ({
+                type: UPDATE_SUCEEDED, updateMovie: action.updateMovie
+            });
+        }
+    }
+    catch(error){
+
+    }
+}
 export function* watchFetchMovies(){
     yield takeLatest(FETCH_MOVIES, fetchMovies);
+}
+export function* watchAddMovie(){
+    yield takeLatest(ADD_MOVIES, addNewMovie);
+}
+export function* watchUpdateMovie(){
+    yield takeLatest(UPDATE_MOVIE,updateMovie);
 }

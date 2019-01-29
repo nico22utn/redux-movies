@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { Text, FlatList , View, StyleSheet, TextInput } from 'react-native'
 import Button from 'react-native-button'
+import FlatListItem from './FlatListItem';
+import EditModal from './EditModal';
 
 export default class MovieComponent extends Component {
     constructor(props){
@@ -25,7 +27,8 @@ export default class MovieComponent extends Component {
                 <TextInput style = { styles.secondInputStyle} 
                     onChangeText = { (text) => this.setState({ releaseYear: text})}
                     value = { this.state.releaseYear}
-                    placeholder = "Año Lanzamiento"/>
+                    placeholder = "Año Lanzamiento"
+                    keyboardType = "numeric" />
             </View>
             <View style = {styles.contentButtonStyle}>
                 <Button style = { styles.secondButtonStyle} 
@@ -51,21 +54,20 @@ export default class MovieComponent extends Component {
                         backgroundColor: 'darkviolet'
                     }}
                     onPress = { () => {
-                        
+                        const { movieName, releaseYear } = this.state;
+                        if ( !movieName.length || !releaseYear.length){
+                            alert("Tienes que completar los 2 campos");
+                            return;
+                        }
+                        this.props.onAddMovie({name: movieName, releaseYear})
                     }}>
                     Añadir película</Button>
             </View>
             <FlatList data = { this.props.movies}
-                keyExtractor = { (item) => item.name}
+                keyExtractor = { (item) => item.id}
                 renderItem = { ({item,index}) => 
-                    <Text style = { {
-                        padding: 10,
-                        fontWeight: 'bold',
-                        fontSize: 17,
-                        color: 'white',
-                        backgroundColor: ( index % 2 === 0) ? 'dodgerblue' : 'mediumseagreen'
-                    }}>{`${item.name}, Año Lanzamiento: ${item.releaseYear}`}</Text>
-                }/>
+                    <FlatListItem {...item} itemIndex={index} movieComponent = {this}></FlatListItem>}/>
+            <EditModal ref={"editModal"} movieComponent = {this}/>
         </View>
         )
     }
@@ -106,7 +108,7 @@ const styles = StyleSheet.create({
         padding: 10,
         borderColor: 'gray',
         borderWidth: 1,
-        width: 120
+        width: 130
     },
     firstButtonStyle: {
         fontSize: 10,

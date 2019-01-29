@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import MovieComponent from '../../components/MovieComponent';
-import { fetchMoviesAction } from '../actions/Index';
+import { fetchMoviesAction, addMovieAction, updateItemAction } from '../actions/Index';
 
 const mapStatetoProps = (state) => {
     return {
@@ -11,6 +11,12 @@ const mapDispatchToProps = (dispatch) => {
     return {
         onFetchMovies: () => {
             dispatch(fetchMoviesAction())
+        },
+        onAddMovie: (newMovie) =>{
+            dispatch(addMovieAction(newMovie))
+        },
+        onUpdateItemAction: (updatedMovie) => {
+            dispatch(updateItemAction(updatedMovie));
         }
     }
 };

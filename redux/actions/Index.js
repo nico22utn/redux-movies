@@ -1,4 +1,4 @@
-import { FETCH_MOVIES, ADD_MOVIES, FETCH_SUCEEDED, FETCH_FAILED } from "./ActionTypes";
+import { FETCH_MOVIES, ADD_MOVIES, FETCH_SUCEEDED, FETCH_FAILED, UPDATE_MOVIE, UPDATE_SUCEEDED } from "./ActionTypes";
 
 export const fetchMoviesAction = (sort) => {
     return {
@@ -22,5 +22,17 @@ export const fetchFailedAction = (error) => {
     return {
         type: FETCH_FAILED,
         error
+    }
+}
+export const updateItemAction = (updatedMovie) => {
+    return {
+        type: UPDATE_MOVIE,
+        updatedMovie
+    }
+}
+export const updateItemSuccessAction = (updatedMovie) => {
+    return {
+        type: UPDATE_SUCEEDED,
+        updatedMovie
     }
 }
