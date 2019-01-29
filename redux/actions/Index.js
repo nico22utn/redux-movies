@@ -1,4 +1,4 @@
-import { FETCH_MOVIES, ADD_MOVIES, FETCH_SUCEEDED, FETCH_FAILED, UPDATE_MOVIE, UPDATE_SUCEEDED } from "./ActionTypes";
+import { FETCH_MOVIES, ADD_MOVIES, FETCH_SUCEEDED, FETCH_FAILED, UPDATE_MOVIE, UPDATE_SUCEEDED, DELETE_SUCEEDED, DELETE_MOVIE } from "./ActionTypes";
 
 export const fetchMoviesAction = (sort) => {
     return {
@@ -34,5 +34,17 @@ export const updateItemSuccessAction = (updatedMovie) => {
     return {
         type: UPDATE_SUCEEDED,
         updatedMovie
+    }
+}
+export const deleteItemAction = (deleteMovieId) => {
+    return {
+        type: DELETE_MOVIE,
+        deleteMovieId
+    }
+}
+export const deleteItemSuccessAction = ( deleteMovieId) => {
+    return {
+        type: DELETE_SUCEEDED,
+        deleteMovieId
     }
 }

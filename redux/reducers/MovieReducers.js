@@ -1,4 +1,4 @@
-import { FETCH_SUCEEDED, FETCH_FAILED, ADD_MOVIES, FETCH_MOVIES, UPDATE_MOVIE, UPDATE_SUCEEDED } from "../actions/ActionTypes";
+import { FETCH_SUCEEDED, FETCH_FAILED, ADD_MOVIES, FETCH_MOVIES, UPDATE_MOVIE, UPDATE_SUCEEDED, DELETE_SUCEEDED } from "../actions/ActionTypes";
 
 const movieReducers = ( movies = [], action) =>{
     switch (action.type) { 
@@ -16,6 +16,11 @@ const movieReducers = ( movies = [], action) =>{
             return movies.map(eachMovie => (eachMovie.id.toString() === action.updatedMovie.id) ?
                 { ...eachMovie, name: action.updatedMovie.name,releaseYear: action.updatedMovie.releaseYear} : 
                 eachMovie);
+        case DELETE_SUCEEDED:
+            const filteredMovies = movies.filter( eachMovie => {
+                return eachMovie.id.toString() !== action.deletedMovieId.toString();
+            });
+            return filteredMovies;
         default:
             return movies;
     }

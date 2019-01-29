@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, StyleSheet , Text } from 'react-native';
+import { View, Alert, StyleSheet , Text } from 'react-native';
 import Swipeout from 'react-native-swipeout';
 
 export default class FlatListItem extends Component {
@@ -23,7 +23,17 @@ export default class FlatListItem extends Component {
             },
             {
                 onPress: () => {
-                    
+                    Alert.alert('Alert','Estás seguro de borrar éste ítem?',[
+                        {
+                            text: 'No', onPress: () => alert("Se canceló la operación"), style: 'cancel'
+                        },
+                        {
+                            text: 'Yes', onPress: () => {
+                                const { movieComponent } = this.props;
+                                movieComponent.props.onDeleteItemAction(this.props.id);
+                            }
+                        }
+                    ])
                 },
                 text: 'Delete', type: 'delete'
             }
