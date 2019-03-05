@@ -1,7 +1,9 @@
-const urlMovies = "http:urlConAlgunGET";
-const urlPostMovies = "http://URLPOSTMOVIES.com";
-const urlPUTMovies = "http://URLPUTMOVIES.com";
-const urlDELETEMovies="http://URLDELETE.com";
+const url = "http://localhost:8080/movies"
+const urlMovies = `${url}/list`;
+const urlPostMovies = `${url}/add`;
+const urlPUTMovies = `${url}/edit`;
+const urlDELETEMovies = `${url}/delete`;
+
 function* getMoviesFromApi(){
     const response = yield fetch(urlMovies,{
         method: 'GET',
@@ -37,8 +39,8 @@ function* updatedMovieFromApi(updatedMovie){
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            name: newMovie.name,
-            releaseYear: newMovie.releaseYear
+            name: updatedMovie.name,
+            releaseYear: updatedMovie.releaseYear
         })
     });
     return yield (response.status === 200);
